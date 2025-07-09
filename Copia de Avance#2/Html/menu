@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menú Soluna</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="../Styles/menu.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row min-vh-100">
+
+      <!-- ASIDE: menú lateral -->
+      <aside class="col-md-3 text-white p-4">
+        <h4 class="mb-4">Menú</h4>
+        <ul class="nav flex-column">
+          <li class="nav-item"><a class="nav-link text-white" href="#pizzas">Pizzas</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#hamburguesas">Hamburguesas</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="#pastas">Pastas</a></li>
+        </ul>
+      </aside>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <main class="col-md-9 p-4">
+        <img src="https://images.unsplash.com/photo-1601924582975-df2f96f4c255" class="banner-img" alt="Banner Pizza y Hamburguesas">
+
+        <h2 class="mb-4" id="pizzas">Menú de Pizzas</h2>
+
+        <div class="table-responsive mb-5">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Pizza</th><th>Ingredientes</th><th>P</th><th>M</th><th>G</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Suprema</td><td>Cebolla morada, chile dulce, jamón, pepperoni y hongos</td><td>₡4000</td><td>₡7500</td><td>₡9500</td></tr>
+              <tr><td>Jamón</td><td>Jamón</td><td>₡4000</td><td>₡7000</td><td>₡9000</td></tr>
+              <tr><td>Pepperoni</td><td>Pepperoni</td><td>₡4000</td><td>₡7000</td><td>₡9000</td></tr>
+              <tr><td>Hawaina</td><td>Jamón y piña</td><td>₡4000</td><td>₡7500</td><td>₡9500</td></tr>
+              <tr><td>4 Estaciones</td><td>Jamón, alcachofas, aceitunas negras y hongos</td><td>₡4500</td><td>₡7500</td><td>₡9500</td></tr>
+              <tr><td>Jamón y Hongos</td><td>Jamón y hongos</td><td>₡4000</td><td>₡7500</td><td>₡9500</td></tr>
+              <tr><td>Tocineta</td><td>Tocineta</td><td>₡4500</td><td>₡8000</td><td>₡10000</td></tr>
+              <tr><td>Margarita o Queso</td><td>Orégano y albahaca</td><td>₡4000</td><td>₡7000</td><td>₡9000</td></tr>
+              <tr><td>Napolitana</td><td>Tomate, orégano y albahaca</td><td>₡4000</td><td>₡7500</td><td>₡9500</td></tr>
+              <tr><td><b>De la Casa</b></td><td>Chile dulce, cebolla morada, jamón, pepperoni, tocineta, alcachofas, aceitunas, hongos y tomate cherry</td><td>₡4800</td><td>₡8500</td><td>₡10500</td></tr>
+              <tr><td><b>Vegetariana</b></td><td>Chile dulce, cebolla morada, alcachofas, aceitunas, tomate cherry, hongos y aguacate</td><td>₡5000</td><td>₡8500</td><td>₡11000</td></tr>
+              <tr><td><b>Serrano</b></td><td>Tomate cherry, jamón serrano, parmesano y arúgula</td><td>₡5500</td><td>₡9000</td><td>₡12000</td></tr>
+              <tr><td><b>Rústica</b></td><td>Cebolla morada, pepperoni y aguacate</td><td>₡5000</td><td>₡8500</td><td>₡11000</td></tr>
+              <tr><td><b>Camarones</b></td><td>Tomate cherry, cebolla morada y camarones al ajillo</td><td>₡6000</td><td>₡10000</td><td>₡13000</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="mb-4" id="hamburguesas">Menú de Hamburguesas</h2>
+        <div class="table-responsive mb-5">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Hamburguesa</th><th>Ingredientes</th><th>Precio</th><th>Doble</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Clásica</td><td>Res, queso mozzarella, tomate, lechuga, cebolla, mayonesa</td><td>₡4500</td><td>₡5800</td></tr>
+              <tr><td>Bacon</td><td>Res, queso amarillo, pepinillos, tocineta, cebolla, salsa especial</td><td>₡4800</td><td>₡6000</td></tr>
+              <tr><td>Americana</td><td>Res, tocineta, pepinillos, queso amarillo, cebolla morada, tomate, arúgula, alioli chipotle</td><td>₡5000</td><td>₡6300</td></tr>
+              <tr><td><b>Hongos</b></td><td>Res, queso mozzarella, queso amarillo, hongos, cebolla, albahaca, mayonesa especial</td><td>₡5000</td><td>₡6300</td></tr>
+              <tr><td>Pollo</td><td>Pechuga de pollo a la plancha, mozzarella, tomate, arúgula, cebolla morada, alioli chipotle</td><td>₡6000</td><td>-</td></tr>
+              <tr><td>Onion Club</td><td>Res, aros de cebolla, queso amarillo, cebolla morada, mayonesa especial</td><td>₡5500</td><td>₡7300</td></tr>
+              <tr><td><b>Aguacate</b></td><td>Res, tocineta, pepinillos, queso amarillo, aros de cebolla, cebolla morada, tomate, lechuga, mayonesa</td><td>₡6500</td><td>₡7800</td></tr>
+              <tr><td><b>Mar y Tierra</b></td><td>Res, camarones, queso amarillo, cebolla morada, tomate, mozzarella, lechuga, mayonesa</td><td>₡7000</td><td>₡8300</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="mb-4" id="pastas">Menú de Pastas</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Pasta</th><th>Ingredientes</th><th>Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Pasta al pesto</td><td>Pasta artesanal con salsa pesto de albahaca, ajo, parmesano y aceite de oliva</td><td>₡5000</td></tr>
+              <tr><td>Pasta carbonara</td><td>Pasta con crema, huevo, parmesano, tocineta y pimienta negra</td><td>₡5500</td></tr>
+              <tr><td>Pasta boloñesa</td><td>Pasta con salsa de tomate casera y carne molida sazonada</td><td>₡5200</td></tr>
+              <tr><td>Fettuccine Alfredo</td><td>Pasta con crema, queso parmesano y mantequilla</td><td>₡5400</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="mt-5">Extras</h4>
+        <ul>
+          <li>Torta carne: ₡1300</li>
+          <li>Aros de cebolla: ₡1000</li>
+          <li>Tocineta: ₡800</li>
+          <li>Queso mozzarella: ₡400</li>
+          <li>Queso amarillo: ₡400</li>
+          <li>Camarones: ₡2000</li>
+          <li>Papas fritas: ₡1000</li>
+        </ul>
+
+        <p class="mt-4 fw-bold">Todas las hamburguesas incluyen papas fritas. Torta y pan hechos por nosotros.</p>
+
+      </main>
+    </div>
+  </div>
+</body>
+</html>
