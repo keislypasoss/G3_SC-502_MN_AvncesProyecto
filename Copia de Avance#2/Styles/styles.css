@@ -240,4 +240,20 @@ nav ul.menu li a:hover {
 
   }
   
+  .btn-menu {
+  background-color: #d35400; /* naranja oscuro */
+  color: white;
+  padding: 12px 28px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.btn-menu:hover {
+  background-color: #b34700;
+  color: white;
+}
+
   
