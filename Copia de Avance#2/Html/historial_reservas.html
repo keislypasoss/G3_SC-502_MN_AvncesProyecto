@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Historial Reservas</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../Styles/styles.css" />
+  <script src="../javascript/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <div id="header"></div>
+
+  <main class="container mt-5 mb-5">
+    <div id="alert-container"></div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 class="card-title" style="color: #e67e22;">Historial de Reservas</h1>
+          <a href="crear_reserva.html" class="btn btn-success">
+            Nueva Reserva
+          </a>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead class="thead-light text-center">
+              <tr>
+                <th>Cliente</th>
+                <th>Mesa</th>
+                <th>Fecha</th>
+                <th>Personas</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="align-items-center text-center">
+              <tr>
+                <td>Juan Pérez</td>
+                <td>Mesa 1 - Interior</td>
+                <td>2025-07-12 19:00</td>
+                <td>4</td>
+                <td><span class="badge badge-success">Confirmada</span></td>
+                <td>
+                  <div class="d-flex">
+                    <a href="editar_reserva.html?id=1" class="btn btn-warning btn-sm mr-2">
+                      <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminacion(1)">
+                      <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Ana Gómez</td>
+                <td>Mesa 2 - Terraza</td>
+                <td>2025-07-13 20:30</td>
+                <td>2</td>
+                <td><span class="badge badge-info">Pendiente</span></td>
+                <td>
+                  <div class="d-flex">
+                    <a href="editar_reserva.html?id=2" class="btn btn-warning btn-sm mr-2">
+                      <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <button class="btn btn-danger btn-sm" onclick="confirmarEliminacion(2)">
+                      <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script>
+    function confirmarEliminacion(id) {
+      if (confirm("¿Deseas eliminar la reserva #" + id + "?")) {
+        mostrarAlerta("Reserva #" + id + " eliminada correctamente.", "success");
+      }
+    }
+
+    function mostrarAlerta(mensaje, tipo) {
+      const alertContainer = document.getElementById("alert-container");
+
+      const alertHTML = `
+        <div class="alert alert-${tipo} alert-dismissible fade show" role="alert">
+          ${mensaje}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      `;
+
+      alertContainer.innerHTML = alertHTML;
+
+      // Auto-cierre opcional después de 5 segundos
+      setTimeout(() => {
+        const alert = alertContainer.querySelector('.alert');
+        if (alert) {
+          alert.classList.remove('show');
+          alert.classList.add('fade');
+        }
+      }, 5000);
+    }
+  </script>
+</body>
+
+
+</html>
