@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <nav> 
   <ul class="menu">
     <li><a href="HomePage.html">Menú</a></li>
-    <li><a href="#">Reservas</a></li>
+    <li><a href="historial_reservas.html">Reservas</a></li>
     <li><a href="#">Pedidos</a></li>
 
     <li class="submenu-container">
@@ -20,5 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </nav>
 
   </header>
+  `;
+  document.getElementById("footer").innerHTML = `
+   <footer>
+    <p>&copy; 2025 Restaurante Soluna. Todos los derechos reservados.</p>
+    <p>Dirección: Calle 123, Ciudad | Teléfono: 555-1234</p>
+  </footer>
   `;
 });
