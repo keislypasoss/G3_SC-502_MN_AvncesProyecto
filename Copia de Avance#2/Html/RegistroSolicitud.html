@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <title>Registro de Solicitudes</title>
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../Styles/styles.css" />
   <script src="../javascript/script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
   <div id="header"></div>
 
+  <main class="container mt-5 mb-5" style="max-width: 800px;">
+    <div class="card shadow-sm">
+      <div class="card-body py-5 px-4">
+        <h1 class="card-title mb-4 text-center" style="color: #e67e22;">
+          Registro de Solicitudes
+        </h1>
+
+        <form id="form">
+          <div class="form-group mb-3">
+            <label for="email" class="form-label">Correo Electrónico:</label>
+            <input type="email" id="email" class="form-control" placeholder="ejemplo@correo.com" required />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="categoria" class="form-label">Categoría Solicitud:</label>
+            <select id="categoria" class="form-control" required>
+              <option value="" disabled selected>Seleccione</option>
+              <option value="consulta">Consulta</option>
+              <option value="queja">Queja</option>
+              <option value="solicitud">Solicitud</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion" class="form-label">Descripción solicitud:</label>
+            <textarea id="descripcion" class="form-control" rows="5" placeholder="Describa su solicitud..."
+              required></textarea>
+          </div>
+
+          <div id="mensaje" class="mt-3"></div>
+      </div>
+
+      <div class="card-footer text-center">
+        <button type="submit" class="btn btn-light">Enviar</button>
+      </div>
 
 
-<main class="container mt-5" style="max-width: 800px;">
-  <div class="card shadow-sm">
-    <div class="card-body py-5 px-4">
-    <h1 class="card-title mb-4 text-center" style="color: #e67e22;">
-  Registro de Solicitudes
-</h1>
-
-      <form id="form">
-        <div class="form-group mb-3">
-          <label for="email" class="form-label">Correo Electrónico:</label>
-          <input type="email" id="email" class="form-control" placeholder="ejemplo@correo.com" required />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="categoria" class="form-label">Categoría Solicitud:</label>
-          <select id="categoria" class="form-control" required>
-            <option value="" disabled selected>Seleccione</option>
-            <option value="consulta">Consulta</option>
-            <option value="queja">Queja</option>
-            <option value="solicitud">Solicitud</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="descripcion" class="form-label">Descripción solicitud:</label>
-          <textarea id="descripcion" class="form-control" rows="5" placeholder="Describa su solicitud..." required></textarea>
-        </div>
-
-        <div id="mensaje" class="mt-3"></div>
+      </form>
     </div>
- 
- <div class="card-footer text-center">
-  <button type="submit" class="btn btn-light">Enviar</button>
-</div>
+  </main>
 
-
-    </form>
-  </div>
-</main>
-
-
-
+  <div id="footer"></div>
 
   <script>
     document.getElementById('btnLogin')?.addEventListener('click', function () {
@@ -70,6 +70,7 @@
       }
     });
   </script>
+
 </body>
 
 </html>
