@@ -6,10 +6,14 @@ function renderHeader(): void
             <a href="index.php" class="logo">Soluna</a>
             <nav>
                 <ul class="menu">
-                <li><a href="pages/productos.php">Menú</a></li>
+                <li><a href="Modulos/menu.php">Menú</a></li>
                 <li><a href="historial_reservas.html">Reservas</a></li>
                 <li><a href="pedidos/lista.php">Pedidos</a></li>
-                <li><a href="Modulos/carrito.php">Carrito</a></li>
+                <li>
+                <a href="Modulos/carrito.php">Carrito
+                    <span class="badge text-bg-danger ms-1 d-none" data-cart-badge>0</span>
+                </a>
+                </li>
                 <li class="submenu-container">
                     <a href="#">Atención al Cliente</a>
                     <ul class="submenu">
