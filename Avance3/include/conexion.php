@@ -1,11 +1,12 @@
 <?php
+
 //Control de conexion a base de datos
 //Activar reporte de errores
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $host = 'localhost';
 $usuario = 'root';
-$contrasenia = 'camila03';
-$base_datos = 'restauranteSoluna';
+$contrasenia = '12345';
+$base_datos = 'restaurante_soluna';
 
 $mysqli = new mysqli($host,$usuario,$contrasenia,$base_datos);
 if($mysqli->connect_error){
