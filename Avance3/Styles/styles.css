@@ -33,7 +33,7 @@ header {
   display: block;
 }
 
-.logo a:hover {
+.logo:hover {
   background-color: #e67e22;
 }
 
