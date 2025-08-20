@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+if($_SESSION['rol'] !== 'admin') {
+    header('Location: ../index.php');
+    exit;
+}
+
 $APP_ROOT = realpath(__DIR__ . '/..');
 require_once $APP_ROOT . '/include/layout.php';
 require_once $APP_ROOT . '/include/conexion.php';      

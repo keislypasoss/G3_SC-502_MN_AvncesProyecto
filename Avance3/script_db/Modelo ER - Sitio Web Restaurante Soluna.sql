@@ -168,3 +168,20 @@ ALTER TABLE `Producto` ADD FOREIGN KEY (`id_categoria`) REFERENCES `Categoria_Pr
 ALTER TABLE `Inventario` ADD FOREIGN KEY (`id_producto`) REFERENCES `Producto` (`id_producto`);
 
 ALTER TABLE `Promocion` ADD FOREIGN KEY (`id_producto`) REFERENCES `Producto` (`id_producto`);
+
+-- Insertar Estados
+INSERT INTO Estado (nombre, tipo_estado) 
+Values ("Pagado", "Pedido");
+
+INSERT INTO Estado (nombre, tipo_estado) 
+Values ("Pendiente", "Pedido");
+
+INSERT INTO Estado (nombre, tipo_estado) 
+Values ("Entregado", "Pedido");
+
+--Insertar Métodos de Pago
+INSERT INTO Metodo_Pago (nombre) 
+Values ("Tarjeta");
+
+INSERT INTO Metodo_Pago (nombre) 
+Values ("Efectivo");

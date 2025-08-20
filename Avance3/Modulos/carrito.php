@@ -163,7 +163,7 @@ $total = $carrito->total();
                             <button class="btn btn-outline-danger">Vaciar carrito</button>
                         </form>
                     </div>
-                    <button class="btn btn-success" disabled>Proceder al pago</button>
+                    <a class="btn btn-success" href="Modulos/checkout.php">Proceder al pago</a>
                 </div>
             <?php endif; ?>
         </section>

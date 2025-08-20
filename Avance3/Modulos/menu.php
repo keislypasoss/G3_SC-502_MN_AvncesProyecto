@@ -1,5 +1,7 @@
 <?php
-// Modulos/tienda.php
+
+session_start();
+
 $APP_ROOT = realpath(__DIR__ . '/..');
 require_once $APP_ROOT . '/include/layout.php';
 require_once $APP_ROOT . '/include/conexion.php';
