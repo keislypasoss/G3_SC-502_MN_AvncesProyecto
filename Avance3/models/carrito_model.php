@@ -8,7 +8,7 @@ class CarritoModel {
             session_start();
         }
         if (!isset($_SESSION[self::KEY]) || !is_array($_SESSION[self::KEY])) {
-            $_SESSION[self::KEY] = []; // array[id] = [id,nombre,precio,cantidad,imagen]
+            $_SESSION[self::KEY] = []; 
         }
     }
 

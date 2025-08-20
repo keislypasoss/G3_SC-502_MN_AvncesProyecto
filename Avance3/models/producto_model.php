@@ -1,15 +1,17 @@
 <?php
-// models/ProductoModel.php
 
-class ProductoModel {
+class ProductoModel
+{
     private mysqli $db;
 
-    public function __construct(mysqli $db) {
+    public function __construct(mysqli $db)
+    {
         $this->db = $db;
     }
 
     /* ====== CREATE ====== */
-    public function crear(array $p): int {
+    public function crear(array $p): int
+    {
         $sql = "INSERT INTO Producto (nombre, descripcion, precio, disponible, imagen, id_categoria)
                 VALUES (?,?,?,?,?,?)";
         $stmt = $this->db->prepare($sql);
@@ -28,7 +30,8 @@ class ProductoModel {
     }
 
     /* ====== READ (uno) ====== */
-    public function obtenerPorId(int $id_producto): ?array {
+    public function obtenerPorId(int $id_producto): ?array
+    {
         $sql = "SELECT p.*, c.nombre AS categoria_nombre
                 FROM Producto p
                 LEFT JOIN Categoria_Producto c ON c.id_categoria = p.id_categoria
@@ -42,7 +45,8 @@ class ProductoModel {
     }
 
     /* ====== UPDATE ====== */
-    public function actualizar(int $id_producto, array $p): bool {
+    public function actualizar(int $id_producto, array $p): bool
+    {
         $sql = "UPDATE Producto
                    SET nombre=?, descripcion=?, precio=?, disponible=?, imagen=?, id_categoria=?
                  WHERE id_producto=?";
@@ -59,22 +63,23 @@ class ProductoModel {
         return $stmt->execute();
     }
 
-    /* ====== DELETE (soft) ====== */
-    public function eliminar(int $id_producto): bool {
+    /* ====== DELETE (desactiva) ====== */
+    public function eliminar(int $id_producto): bool
+    {
         $stmt = $this->db->prepare("UPDATE Producto SET disponible = 0 WHERE id_producto = ?");
         $stmt->bind_param('i', $id_producto);
         return $stmt->execute();
     }
 
-    /* Opcional: restaurar disponibilidad */
-    public function restaurar(int $id_producto): bool {
+    public function restaurar(int $id_producto): bool
+    {
         $stmt = $this->db->prepare("UPDATE Producto SET disponible = 1 WHERE id_producto = ?");
         $stmt->bind_param('i', $id_producto);
         return $stmt->execute();
     }
 
-    /* ====== LISTAR + FILTROS + PAGINACIÓN ====== */
-    public function listar(array $filtros = [], int $page = 1, int $perPage = 20, string $orderBy = 'p.id_producto DESC'): array {
+    public function listar(array $filtros = [], int $page = 1, int $perPage = 20, string $orderBy = 'p.id_producto DESC'): array
+    {
         $page    = max(1, (int)$page);
         $perPage = max(1, min(200, (int)$perPage));
         $offset  = ($page - 1) * $perPage;
@@ -112,12 +117,10 @@ class ProductoModel {
             $sql .= " WHERE " . implode(" AND ", $conds);
         }
 
-        // Sanitizar orderBy a columnas permitidas
         $orderBySafe = preg_match('/^\s*p\.(id_producto|nombre|precio|disponible)\s+(ASC|DESC)\s*$/i', $orderBy)
             ? $orderBy
             : 'p.id_producto DESC';
 
-        // LIMIT/OFFSET integrados como enteros sanitizados para evitar problemas con placeholders en algunas versiones
         $sql .= " ORDER BY {$orderBySafe} LIMIT {$perPage} OFFSET {$offset}";
 
         $stmt = $this->db->prepare($sql);
@@ -129,8 +132,8 @@ class ProductoModel {
         return $res->fetch_all(MYSQLI_ASSOC);
     }
 
-    /* Para paginar: total coincidente con filtros */
-    public function contar(array $filtros = []): int {
+    public function contar(array $filtros = []): int
+    {
         $sql = "SELECT COUNT(*) AS total FROM Producto p";
         $conds  = [];
         $params = [];
@@ -165,8 +168,8 @@ class ProductoModel {
         return (int)$row['total'];
     }
 
-    /* Utilidad: listar categorías (por si quieres poblar selects) */
-    public function categorias(): array {
+    public function categorias(): array
+    {
         $res = $this->db->query("SELECT id_categoria, nombre FROM Categoria_Producto ORDER BY nombre");
         return $res->fetch_all(MYSQLI_ASSOC);
     }

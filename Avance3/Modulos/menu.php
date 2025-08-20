@@ -9,11 +9,9 @@ require_once $APP_ROOT . '/models/producto_model.php';
 
 $model = new ProductoModel($mysqli);
 
-/* ====== FILTROS (GET) ====== */
 $q            = trim($_GET['q'] ?? '');
 $id_categoria = (int)($_GET['categoria'] ?? 0);
 
-// Mostrar solo disponibles al público
 $filtros = [
     'nombre'       => $q,
     'id_categoria' => $id_categoria ?: null,
@@ -151,7 +149,6 @@ $productos  = $model->listar($filtros, page: 1, perPage: 96, orderBy: 'p.nombre 
         </div>
     </div>
 
-    <!-- Toast confirmación -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="toastOk" class="toast align-items-center text-bg-success border-0" role="status" aria-live="polite" aria-atomic="true">
             <div class="d-flex">
@@ -162,7 +159,6 @@ $productos  = $model->listar($filtros, page: 1, perPage: 96, orderBy: 'p.nombre 
     </div>
 
     <script>
-        /* Llenar modal de detalles */
         const modalDetalles = document.getElementById('modalDetalles');
         modalDetalles.addEventListener('show.bs.modal', event => {
             const btn = event.relatedTarget;
@@ -184,7 +180,6 @@ $productos  = $model->listar($filtros, page: 1, perPage: 96, orderBy: 'p.nombre 
             modalDetalles.querySelector('#det_cantidad').value = 1;
         });
 
-        /* Toast helpers */
         function showToastSuccess(msg) {
             const toastEl = document.getElementById('toastOk');
             document.getElementById('toastMsg').textContent = msg;
@@ -198,7 +193,6 @@ $productos  = $model->listar($filtros, page: 1, perPage: 96, orderBy: 'p.nombre 
             const badge = document.querySelector('[data-cart-badge]');
             if (!badge) return;
             badge.textContent = count;
-            // ocultar si es 0 (opcional)
             if (count <= 0) badge.classList.add('d-none');
             else badge.classList.remove('d-none');
         }
@@ -229,7 +223,6 @@ $productos  = $model->listar($filtros, page: 1, perPage: 96, orderBy: 'p.nombre 
             }
         });
 
-        /* (Opcional) Al cargar, sincroniza el badge si existe */
         window.addEventListener('DOMContentLoaded', async () => {
             try {
                 const fd = new FormData();
