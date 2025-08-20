@@ -185,3 +185,15 @@ Values ("Tarjeta");
 
 INSERT INTO Metodo_Pago (nombre) 
 Values ("Efectivo");
+
+INSERT INTO Estado (nombre, tipo_estado) 
+VALUES ('Pendiente', 'Reserva');
+
+INSERT INTO Estado (nombre, tipo_estado) 
+VALUES ('Confirmada', 'Reserva');
+
+INSERT INTO Estado (nombre, tipo_estado) 
+VALUES ('Cancelada', 'Reserva');
+
+INSERT INTO Estado (nombre, tipo_estado) 
+VALUES ('Finalizada', 'Reserva');

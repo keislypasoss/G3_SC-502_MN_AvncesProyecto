@@ -1,0 +1,174 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    color: #333;
+  }
+  
+  /* Header */
+  header {
+    background-color: #34495e;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  /* Menú de navegación */
+  nav ul.menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 20px;
+  }
+  
+  nav ul.menu li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  nav ul.menu li a:hover {
+    background-color: #e67e22;
+  }
+  
+  /* Hero */
+  .hero {
+    background-color: #e67e22;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+  }
+  
+  .hero h2 {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+  }
+  
+  .btn {
+    background-color: white;
+    color: #e67e22;
+    padding: 12px 28px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+  .btn:hover {
+    background-color: #cf711f;
+    color: white;
+  }
+  
+  /* Sección destacados */
+  .destacados {
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .destacados h3 {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .platillos {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+  
+  .platillo {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    width: 320px; 
+    padding: 20px; 
+  }
+  
+  .platillo img {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  
+  .platillo h4 {
+    margin-top: 15px;
+    font-size: 18px; 
+    text-align: center;
+  }
+  
+  
+  /* Reservas */
+  .reservas {
+    background-color: #fff;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .reservas h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  .reservas p {
+    margin-bottom: 25px;
+    font-size: 16px;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #34495e;
+    color: white;
+    text-align: center;
+    padding: 20px 15px;
+    font-size: 14px;
+  }
+  
+  /* Responsive para móviles */
+  @media (max-width: 600px) {
+   
+  
+    .platillos {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .hero h2 {
+      font-size: 28px;
+    }
+  
+    .destacados h3 {
+      font-size: 24px;
+    }
+  
+    .reservas h3 {
+      font-size: 24px;
+    }
+
+  }
+  
+  
