@@ -26,7 +26,7 @@ function renderHeader(): void
                     </li>
                     ';
     if ($isLogged && $rolSafe === 'cliente') {
-        echo    '<li><a href="historial_reservas.html">Reservas</a></li>
+        echo    '<li><a href="Modulos/historial_reservas.php">Reservas</a></li>
                     <li><a href="pedidos/lista.php">Pedidos</a></li>
                     <li class="submenu-container">
                         <a href="#">Atención al Cliente</a>
