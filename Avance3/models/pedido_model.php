@@ -1,4 +1,5 @@
-<?php // moldes/PedidoModel.php 
+<?php 
+
 class PedidoModel
 {
     private mysqli $db;
@@ -31,4 +32,5 @@ class PedidoModel
         $st->bind_param('iiid', $id_pedido, $id_producto, $cantidad, $precio_unitario);
         $st->execute();
     }
+    
 }

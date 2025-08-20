@@ -13,7 +13,6 @@ require_once $APP_ROOT . '/models/producto_model.php';
 
 $model = new ProductoModel($mysqli);
 
-/* ====== ACCIONES (POST) ====== */
 $flash = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'] ?? '';

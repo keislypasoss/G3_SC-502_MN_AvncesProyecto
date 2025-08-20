@@ -1,12 +1,11 @@
 <?php
-// Modulos/checkout_api.php
+
 header('Content-Type: application/json; charset=utf-8');
 
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
 $APP_ROOT = realpath(__DIR__ . '/..');
 require_once $APP_ROOT . '/include/conexion.php';
-
 require_once $APP_ROOT . '/models/carrito_model.php';
 require_once $APP_ROOT . '/models/producto_model.php';
 require_once $APP_ROOT . '/models/pedido_model.php';
@@ -45,11 +44,9 @@ try {
     $items = $carrito->items();
     if (!$items) throw new RuntimeException('El carrito está vacío');
 
-    // Datos que sí aceptamos del formulario
     $nota      = trim($_POST['nota'] ?? '');
-    $metodoNom = trim($_POST['metodo_nombre'] ?? 'Tarjeta'); // por defecto Tarjeta
+    $metodoNom = trim($_POST['metodo_nombre'] ?? 'Tarjeta'); 
 
-    // Validar productos y usar precio actual
     $total = 0.0;
     $lineas = [];
     foreach ($items as $it) {
@@ -68,17 +65,16 @@ try {
         ];
     }
 
-    // === Resolver IDs auxiliares (estado y método pago) ===
-    $id_estado = $pedidoM->obtenerEstadoPedidoId('Pagado'); // ya existe por tu script
+
+    $id_estado = $pedidoM->obtenerEstadoPedidoId('Pagado'); 
     if (!$id_estado) throw new RuntimeException('No existe estado "Pagado" para Pedido');
 
     $id_metodo = $facturaM->obtenerMetodoPagoIdPorNombre($metodoNom);
     if (!$id_metodo) throw new RuntimeException('Método de pago inválido');
 
-    // === Obtener o crear Cliente ligado al usuario ===
     $id_cliente = null;
 
-    // 1) Buscar si ya existe Cliente para este id_usuario
+  
     $st = $mysqli->prepare("SELECT id_cliente, nombre, telefono, direccion FROM Cliente WHERE id_usuario=? LIMIT 1");
     $st->bind_param('i', $idUsuario);
     $st->execute();
@@ -87,7 +83,6 @@ try {
     if ($cli) {
         $id_cliente = (int)$cli['id_cliente'];
     } else {
-        // 2) Crear Cliente mínimo usando el correo como nombre si hace falta
         $correo = '';
         $stU = $mysqli->prepare("SELECT correo FROM Usuario WHERE id_usuario=? LIMIT 1");
         $stU->bind_param('i', $idUsuario);
@@ -104,21 +99,16 @@ try {
         $id_cliente = (int)$mysqli->insert_id;
     }
 
-    // === Transacción: Pedido + Detalles + Factura + Detalles ===
     $mysqli->begin_transaction();
     try {
-        // Pedido
         $id_pedido = $pedidoM->crearPedido($id_cliente, $nota, $id_estado);
 
-        // Detalles del pedido
         foreach ($lineas as $ln) {
             $pedidoM->agregarDetalle($id_pedido, $ln['id_producto'], $ln['cantidad'], $ln['precio']);
         }
 
-        // Factura
         $id_factura = $facturaM->crearFactura($id_cliente, $id_pedido, $id_metodo, $total);
 
-        // Detalles de factura
         foreach ($lineas as $ln) {
             $facturaM->agregarDetalleFactura($id_factura, $ln['id_producto'], $ln['cantidad'], $ln['precio'], $ln['nombre']);
         }

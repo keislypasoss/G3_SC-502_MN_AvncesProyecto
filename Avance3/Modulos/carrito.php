@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Modulos/carrito.php
+
 $APP_ROOT = realpath(__DIR__ . '/..');
 require_once $APP_ROOT . '/include/layout.php';
 require_once $APP_ROOT . '/include/conexion.php';
@@ -164,7 +164,6 @@ $total = $carrito->total();
                             <button class="btn btn-outline-danger">Vaciar carrito</button>
                         </form>
                     </div>
-                    <!-- Dentro de tu carrito -->
                     <div class="text-end mt-3">
                         <a href="Modulos/checkout.php" class="btn btn-primary">Finalizar compra</a>
                     </div>

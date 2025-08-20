@@ -1,10 +1,15 @@
 <?php
-// moldes/FacturaModel.php
-class FacturaModel {
-    private mysqli $db;
-    public function __construct(mysqli $db){ $this->db = $db; }
 
-    public function obtenerMetodoPagoIdPorNombre(string $nombre): ?int {
+class FacturaModel
+{
+    private mysqli $db;
+    public function __construct(mysqli $db)
+    {
+        $this->db = $db;
+    }
+
+    public function obtenerMetodoPagoIdPorNombre(string $nombre): ?int
+    {
         $sql = "SELECT id_metodo_pago FROM Metodo_Pago WHERE nombre=? LIMIT 1";
         $st = $this->db->prepare($sql);
         $st->bind_param('s', $nombre);
@@ -13,7 +18,8 @@ class FacturaModel {
         return $r ? (int)$r['id_metodo_pago'] : null;
     }
 
-    public function crearFactura(?int $id_cliente, int $id_pedido, int $id_metodo_pago, float $total): int {
+    public function crearFactura(?int $id_cliente, int $id_pedido, int $id_metodo_pago, float $total): int
+    {
         $sql = "INSERT INTO Factura (id_cliente, id_pedido, fecha, total, id_metodo_pago)
                 VALUES (?,?,?,?,?)";
         $st = $this->db->prepare($sql);
@@ -23,7 +29,8 @@ class FacturaModel {
         return (int)$this->db->insert_id;
     }
 
-    public function agregarDetalleFactura(int $id_factura, int $id_producto, int $cantidad, float $precio_unitario, string $nombre_producto): void {
+    public function agregarDetalleFactura(int $id_factura, int $id_producto, int $cantidad, float $precio_unitario, string $nombre_producto): void
+    {
         $sql = "INSERT INTO Detalle_Factura (id_factura, id_producto, cantidad, precio_unitario, nombre_producto)
                 VALUES (?,?,?,?,?)";
         $st = $this->db->prepare($sql);
@@ -31,7 +38,8 @@ class FacturaModel {
         $st->execute();
     }
 
-    public function obtenerConDetalles(int $id_factura): array {
+    public function obtenerConDetalles(int $id_factura): array
+    {
         $st = $this->db->prepare("SELECT f.*, p.fecha_creacion, c.nombre AS cliente_nombre, c.telefono, c.direccion
                                   FROM Factura f
                                   LEFT JOIN Pedido p ON p.id_pedido = f.id_pedido
@@ -47,5 +55,71 @@ class FacturaModel {
         $detalles = $st2->get_result()->fetch_all(MYSQLI_ASSOC);
 
         return ['factura' => $factura, 'detalles' => $detalles];
+    }
+
+    public function obtenerIdClientePorUsuario(int $id_usuario): ?int
+    {
+        $st = $this->db->prepare("SELECT id_cliente FROM Cliente WHERE id_usuario=? LIMIT 1");
+        $st->bind_param('i', $id_usuario);
+        $st->execute();
+        $r = $st->get_result()->fetch_assoc();
+        return $r ? (int)$r['id_cliente'] : null;
+    }
+
+    /** Lista facturas del cliente (paginado) */
+    public function listarFacturasPorCliente(int $id_cliente, int $limit = 10, int $offset = 0, string $order = 'DESC'): array
+    {
+        $order = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
+        $sql = "SELECT f.id_factura, f.fecha, f.total,
+                   mp.nombre AS metodo_pago,
+                   p.fecha_creacion AS fecha_pedido
+            FROM Factura f
+            LEFT JOIN Metodo_Pago mp ON mp.id_metodo_pago = f.id_metodo_pago
+            LEFT JOIN Pedido p ON p.id_pedido = f.id_pedido
+            WHERE f.id_cliente = ?
+            ORDER BY f.fecha $order
+            LIMIT ? OFFSET ?";
+        $st = $this->db->prepare($sql);
+        $st->bind_param('iii', $id_cliente, $limit, $offset);
+        $st->execute();
+        $rs = $st->get_result();
+
+        $rows = [];
+        while ($r = $rs->fetch_assoc()) {
+            $r['id_factura'] = (int)$r['id_factura'];
+            $r['total']      = (float)$r['total'];
+            $rows[] = $r;
+        }
+        return $rows;
+    }
+
+    /** Total de facturas del cliente (para paginación) */
+    public function contarFacturasPorCliente(int $id_cliente): int
+    {
+        $st = $this->db->prepare("SELECT COUNT(*) c FROM Factura WHERE id_cliente=?");
+        $st->bind_param('i', $id_cliente);
+        $st->execute();
+        return (int)$st->get_result()->fetch_column();
+    }
+
+    /** Detalles de una factura (líneas) */
+    public function obtenerDetallesFactura(int $id_factura): array
+    {
+        $st = $this->db->prepare("SELECT id_producto, nombre_producto, cantidad, precio_unitario,
+                                     (cantidad*precio_unitario) AS subtotal
+                              FROM Detalle_Factura
+                              WHERE id_factura=?");
+        $st->bind_param('i', $id_factura);
+        $st->execute();
+        $rs = $st->get_result();
+
+        $items = [];
+        while ($r = $rs->fetch_assoc()) {
+            $r['cantidad']        = (int)$r['cantidad'];
+            $r['precio_unitario'] = (float)$r['precio_unitario'];
+            $r['subtotal']        = (float)$r['subtotal'];
+            $items[] = $r;
+        }
+        return $items;
     }
 }
