@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Modulos/carrito.php
 $APP_ROOT = realpath(__DIR__ . '/..');
 require_once $APP_ROOT . '/include/layout.php';
@@ -157,13 +158,17 @@ $total = $carrito->total();
 
                 <div class="d-flex flex-wrap gap-2 justify-content-between mt-3">
                     <div class="d-flex gap-2">
-                        <a href="Modulos/menu.php" class="btn btn-outline-secondary">Seguir comprando</a>
+                        <a href="Modulos/menu.php" class="btn btn-outline-secondary ">Seguir comprando</a>
                         <form method="post" onsubmit="return confirm('¿Vaciar todo el carrito?');">
                             <input type="hidden" name="accion" value="vaciar">
                             <button class="btn btn-outline-danger">Vaciar carrito</button>
                         </form>
                     </div>
-                    <a class="btn btn-success" href="Modulos/checkout.php">Proceder al pago</a>
+                    <!-- Dentro de tu carrito -->
+                    <div class="text-end mt-3">
+                        <a href="Modulos/checkout.php" class="btn btn-primary">Finalizar compra</a>
+                    </div>
+
                 </div>
             <?php endif; ?>
         </section>
