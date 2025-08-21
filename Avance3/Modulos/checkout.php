@@ -180,7 +180,6 @@ foreach ($items as $it) {
                 </div>
                 <div class="modal-footer">
                     <a href="Modulos/menu.php" class="btn btn-outline-secondary"> Cerrar</a>
-                    <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
                 </div>
             </div>
         </div>
@@ -248,28 +247,22 @@ foreach ($items as $it) {
 
                 let rows = '';
                 let total = 0;
-                det.forEach(d => {
-                    const cant = parseInt(d.cantidad, 10);
-                    const precio = parseFloat(d.precio_unitario);
+
+                for (const d of det) {
+                    const cant = parseInt(d.cantidad, 10) || 0;
+                    const precio = parseFloat(d.precio_unitario) || 0;
                     const sub = cant * precio;
                     total += sub;
-                    rows += ` <
-                        tr >
-                        <
-                        td > $ {
-                            escapeHtml(d.nombre_producto || '')
-                        } < /td> <
-                        td class = "text-end" > ₡$ {
-                            precio.toFixed(2)
-                        } < /td> <
-                        td class = "text-center" > $ {
-                            cant
-                        } < /td> <
-                        td class = "text-end" > ₡$ {
-                            sub.toFixed(2)
-                        } < /td> <
-                        /tr>`;
-                });
+
+                    rows += `
+                    <tr>
+                    <td>${escapeHtml(d.nombre_producto || '')}</td>
+                    <td class="text-end">₡${precio.toFixed(2)}</td>
+                    <td class="text-center">${cant}</td>
+                    <td class="text-end">₡${sub.toFixed(2)}</td>
+                    </tr>`;
+                }
+
 
                 body.innerHTML = `
                 <div class="mb-3">
