@@ -197,3 +197,30 @@ VALUES ('Cancelada', 'Reserva');
 
 INSERT INTO Estado (nombre, tipo_estado) 
 VALUES ('Finalizada', 'Reserva');
+
+
+insert into categoria_producto (nombre)
+Values("Bedidas frías");
+
+insert into categoria_producto (nombre)
+values ("Pizzas");
+
+insert into categoria_producto (nombre)
+values ("Hambuerguesas");
+
+INSERT INTO Usuario (correo, contrasena, activo, fecha_registro, rol)
+VALUES ('chuete@soluna.com', '$2y$10$NXlL9Rt4dG87Yhmqb3CdXeBdA4EfWfg/.znqmd84T0ngvD872FJ/2', TRUE, NOW(), 'admin');
+
+
+Insert Into Empleado (id_usuario, nombre, puesto) values
+(2, 'Carlos Huete', 'Desarrollador');
+
+
+Insert into Mesa (numero_mesa, num_asientos, ubicacion, disponible)
+values (1, 3, "ventana sur", true);
+
+Insert into Mesa (numero_mesa, num_asientos, ubicacion, disponible)
+values (2, 2, "ventana este", true);
+
+Insert into Mesa (numero_mesa, num_asientos, ubicacion, disponible)
+values (3, 4, "centro", true);

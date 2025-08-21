@@ -12,14 +12,26 @@ class UsuarioModel
     public function getById(int $id): ?array
     {
         $sql = "SELECT
-                    u.id_usuario, u.correo, u.activo, u.fecha_registro, u.rol,
-                    c.id_cliente, c.nombre AS nombre_cliente, c.telefono, c.direccion,
-                    e.id_empleado, e.nombre AS nombre_empleado, e.puesto
-                FROM Usuario u
-                LEFT JOIN Cliente c  ON c.id_usuario  = u.id_usuario
-                LEFT JOIN Empleado e ON e.id_usuario  = u.id_usuario
-                WHERE u.id_usuario = ?
-                LIMIT 1";
+                u.id_usuario, u.correo, u.activo, u.fecha_registro, u.rol,
+                c1.id_cliente, c1.nombre AS nombre_cliente, c1.telefono, c1.direccion,
+                e1.id_empleado, e1.nombre AS nombre_empleado, e1.puesto
+            FROM Usuario u
+            LEFT JOIN (
+                SELECT c.* FROM Cliente c
+                JOIN (
+                    SELECT id_usuario, MAX(id_cliente) AS last_id
+                    FROM Cliente GROUP BY id_usuario
+                ) lc ON lc.id_usuario = c.id_usuario AND lc.last_id = c.id_cliente
+            ) c1 ON c1.id_usuario = u.id_usuario
+            LEFT JOIN (
+                SELECT e.* FROM Empleado e
+                JOIN (
+                    SELECT id_usuario, MAX(id_empleado) AS last_id
+                    FROM Empleado GROUP BY id_usuario
+                ) le ON le.id_usuario = e.id_usuario AND le.last_id = e.id_empleado
+            ) e1 ON e1.id_usuario = u.id_usuario
+            WHERE u.id_usuario = ?
+            LIMIT 1";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -31,9 +43,9 @@ class UsuarioModel
         if (!$row) return null;
 
         $tipo = $this->inferTipo($row['rol'] ?? null, $row['id_cliente'] ?? null, $row['id_empleado'] ?? null);
-
         return $this->buildUsuarioFromRow($row, $tipo);
     }
+
 
     public function listAll(int $limit = 50, int $offset = 0, string $orderBy = 'u.fecha_registro DESC'): array
     {
@@ -44,18 +56,30 @@ class UsuarioModel
         }
 
         $sql = "SELECT
-                    u.id_usuario, u.correo, u.activo, u.fecha_registro, u.rol,
-                    COALESCE(c.nombre, e.nombre) AS nombre,
-                    CASE
-                        WHEN c.id_cliente IS NOT NULL THEN 'cliente'
-                        WHEN e.id_empleado IS NOT NULL THEN 'empleado'
-                        ELSE NULL
-                    END AS tipo
-                FROM Usuario u
-                LEFT JOIN Cliente c  ON c.id_usuario  = u.id_usuario
-                LEFT JOIN Empleado e ON e.id_usuario  = u.id_usuario
-                ORDER BY $orderBy
-                LIMIT ? OFFSET ?";
+                u.id_usuario, u.correo, u.activo, u.fecha_registro, u.rol,
+                COALESCE(c1.nombre, e1.nombre) AS nombre,
+                CASE
+                    WHEN c1.id_cliente IS NOT NULL THEN 'cliente'
+                    WHEN e1.id_empleado IS NOT NULL THEN 'empleado'
+                    ELSE NULL
+                END AS tipo
+            FROM Usuario u
+            LEFT JOIN (
+                SELECT c.* FROM Cliente c
+                JOIN (
+                    SELECT id_usuario, MAX(id_cliente) AS last_id
+                    FROM Cliente GROUP BY id_usuario
+                ) lc ON lc.id_usuario = c.id_usuario AND lc.last_id = c.id_cliente
+            ) c1 ON c1.id_usuario = u.id_usuario
+            LEFT JOIN (
+                SELECT e.* FROM Empleado e
+                JOIN (
+                    SELECT id_usuario, MAX(id_empleado) AS last_id
+                    FROM Empleado GROUP BY id_usuario
+                ) le ON le.id_usuario = e.id_usuario AND le.last_id = e.id_empleado
+            ) e1 ON e1.id_usuario = u.id_usuario
+            ORDER BY $orderBy
+            LIMIT ? OFFSET ?";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("ii", $limit, $offset);

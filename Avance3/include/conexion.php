@@ -5,7 +5,7 @@
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $host = 'localhost';
 $usuario = 'root';
-$contrasenia = '';
+$contrasenia = '12345';
 $base_datos = 'restaurante_soluna';
 
 $mysqli = new mysqli($host,$usuario,$contrasenia,$base_datos);

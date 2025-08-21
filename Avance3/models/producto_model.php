@@ -173,4 +173,28 @@ class ProductoModel
         $res = $this->db->query("SELECT id_categoria, nombre FROM Categoria_Producto ORDER BY nombre");
         return $res->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function listarAleatorios(int $limit = 9, ?int $disponible = 1): array
+    {
+        $limit = max(1, min(60, $limit));
+
+        $sql = "SELECT p.*, c.nombre AS categoria_nombre
+            FROM Producto p
+            LEFT JOIN Categoria_Producto c ON c.id_categoria = p.id_categoria";
+
+        if ($disponible !== null) {
+            $sql .= " WHERE p.disponible = ? ORDER BY RAND() LIMIT ?";
+            $st = $this->db->prepare($sql);
+            $d  = (int)$disponible;
+            $st->bind_param('ii', $d, $limit);
+        } else {
+            $sql .= " ORDER BY RAND() LIMIT ?";
+            $st = $this->db->prepare($sql);
+            $st->bind_param('i', $limit);
+        }
+
+        $st->execute();
+        $res = $st->get_result();
+        return $res->fetch_all(MYSQLI_ASSOC);
+    }
 }
