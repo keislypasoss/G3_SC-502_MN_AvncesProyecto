@@ -143,8 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isAjax) {
     <main class="container-fluid d-flex flex-column min-vh-100" style="margin:0;padding:0;">
         <?php renderHeader(); ?>
 
-        <div class="align-self-center col-11 col-md-6 col-lg-4 m-3 p-2 bg-secondary" style="border-radius: 5px">
-            <p id="titulo-perfil" class="h3 text-center text-white">
+        <div class="align-self-center col-11 col-md-6 col-lg-4 m-3 p-2 bg-warning-subtle" style="border-radius: 5px">
+            <p id="titulo-perfil" class="h3 text-center text-back">
                 Mi Perfil - <?= e($_SESSION['nombre'] ?? ($perfilCliente['nombre'] ?: 'Cliente')) ?>
             </p>
         </div>

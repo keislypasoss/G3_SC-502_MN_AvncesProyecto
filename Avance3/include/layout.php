@@ -49,10 +49,12 @@ function renderHeader(): void
                     </ul>
                 </li>';
     } elseif ($isLogged && $rolSafe === 'admin') {
-        echo    '<li><a href="Modulos/productos_admin.php">Productos</a></li>
+        echo    '<nav>
+                <ul class="menu">
+            <li><a href="Modulos/productos_admin.php">Productos</a></li>
                 <li><a href="Modulos/usuarios_admin.php">Usuarios</a></li>
-                <li><a href="Modulos/pedidos_admin.php">Reportes</a></li>
-                <li><a href="Modulos/reservas_admin.php">Reportes</a></li>    
+                <li><a href="Modulos/pedidos_admin.php">Pedidos</a></li>
+                <li><a href="Modulos/reservas_admin.php">Reservas</a></li>    
                 <li class="submenu-container">
                     <a href="#">' . $correoSafe . '</a>
                     <ul class="submenu">
@@ -78,6 +80,6 @@ function renderFooter(): void
     $year = date('Y');
     echo '<footer class="mt-auto">
         <p>&copy; ' . $year . ' Restaurante Soluna. Todos los derechos reservados.</p>
-        <p>Dirección: Calle 123, Ciudad | Teléfono: 555-1234</p>
+        <p>Dirección: Palmares centro. Costado norte de la iglesia Católica. | Teléfono: 6097 - 3466</p>
     </footer>';
 }

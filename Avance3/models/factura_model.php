@@ -122,4 +122,98 @@ class FacturaModel
         }
         return $items;
     }
+
+    public function listarTodas(array $filtros = [], int $limit = 20, int $offset = 0, string $order = 'DESC'): array
+    {
+        $order = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
+
+        $conds = [];
+        $types = '';
+        $vals  = [];
+
+        if (!empty($filtros['id_factura'])) {
+            $conds[] = 'f.id_factura = ?';
+            $types .= 'i';
+            $vals[]  = (int)$filtros['id_factura'];
+        }
+        if (!empty($filtros['desde'])) {
+            $conds[] = 'f.fecha >= ?';
+            $types .= 's';
+            $vals[]  = $filtros['desde'] . ' 00:00:00';
+        }
+        if (!empty($filtros['hasta'])) {
+            $conds[] = 'f.fecha <= ?';
+            $types .= 's';
+            $vals[]  = $filtros['hasta'] . ' 23:59:59';
+        }
+
+        $where = $conds ? ('WHERE ' . implode(' AND ', $conds)) : '';
+
+        $sql = "SELECT
+                f.id_factura, f.fecha, f.total, f.id_pedido,
+                mp.nombre AS metodo_pago,
+                c.nombre  AS cliente_nombre,
+                u.correo  AS correo_cliente
+            FROM Factura f
+            LEFT JOIN Metodo_Pago mp ON mp.id_metodo_pago = f.id_metodo_pago
+            LEFT JOIN Cliente c      ON c.id_cliente      = f.id_cliente
+            LEFT JOIN Usuario u      ON u.id_usuario      = c.id_usuario
+            $where
+            ORDER BY f.fecha $order
+            LIMIT ? OFFSET ?";
+
+        $types .= 'ii';
+        $vals[]  = $limit;
+        $vals[]  = $offset;
+
+        $st = $this->db->prepare($sql);
+        $st->bind_param($types, ...$vals);
+        $st->execute();
+        $rs = $st->get_result();
+
+        $rows = [];
+        while ($r = $rs->fetch_assoc()) {
+            $r['id_factura'] = (int)$r['id_factura'];
+            $r['id_pedido']  = (int)$r['id_pedido'];
+            $r['total']      = (float)$r['total'];
+            $rows[] = $r;
+        }
+        return $rows;
+    }
+
+    /** Cuenta total para paginar con los mismos filtros */
+    public function contarTodas(array $filtros = []): int
+    {
+        $conds = [];
+        $types = '';
+        $vals  = [];
+
+        if (!empty($filtros['id_factura'])) {
+            $conds[] = 'f.id_factura = ?';
+            $types .= 'i';
+            $vals[]  = (int)$filtros['id_factura'];
+        }
+        if (!empty($filtros['desde'])) {
+            $conds[] = 'f.fecha >= ?';
+            $types .= 's';
+            $vals[]  = $filtros['desde'] . ' 00:00:00';
+        }
+        if (!empty($filtros['hasta'])) {
+            $conds[] = 'f.fecha <= ?';
+            $types .= 's';
+            $vals[]  = $filtros['hasta'] . ' 23:59:59';
+        }
+
+        $where = $conds ? ('WHERE ' . implode(' AND ', $conds)) : '';
+
+        $sql = "SELECT COUNT(*) c
+            FROM Factura f
+            LEFT JOIN Cliente c ON c.id_cliente = f.id_cliente
+            $where";
+
+        $st = $this->db->prepare($sql);
+        if ($types) $st->bind_param($types, ...$vals);
+        $st->execute();
+        return (int)$st->get_result()->fetch_column();
+    }
 }
